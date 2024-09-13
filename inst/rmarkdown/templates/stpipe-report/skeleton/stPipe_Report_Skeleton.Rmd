@@ -1,0 +1,45 @@
+---
+title: "stPipe Demo Report"
+author: "Yang Xu"
+date: "2024/09/12"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+```{r setup, message=FALSE, warning=FALSE}
+# library necessary libraries and load demo date
+library(stPipe)
+library(curl)
+library(knitr)
+library(rmarkdown)
+library(ggplot2)
+library(magick)
+```
+
+```{r}
+# Firstly we run the 'Run_ST' function which basically processes FASTQ files directly to gene count matrix; remember always keep your input config file consistent
+mousebrain_visium <- Run_ST(config = "~/Desktop/config_stPipe.yml", show.config = FALSE)
+```
+
+```{r}
+# Second step is to match the spatial coordinates for each spot/bead/bin via the 'Run_loc_match' function, 10X Visium has a fixed system for this while Slide-seq, Curio-seeker, and Stereo-seq requires you to fill in the path to each sample
+matching <- Run_loc_match(config = "~/Desktop/config_stPipe.yml", show.config = FALSE)
+```
+
+```{r}
+# Then you can visualize data quality via the 'Run_Vis' function for both reads-level and spatial level.
+
+```
+
+```{r}
+# If severe data noise is observed, you may need to consider run the 'Run_QC' function to get rid of those background noise for example in 10X Visium some reads will fall out of the tissue.
+qc.results <- Run_QC(config = "~/Desktop/config_stPipe.yml", matched.data = matching, gene.matrix = gene_count, show.config = FALSE)
+```
+
+```{r}
+# You can review the data quality again after QC step, and iterate it until you feel happy with the filtered result.
+
+```
+

@@ -1,0 +1,4 @@
+name: stPipe Report
+description: >
+  This template generates a report for sequencing-based spatial transcriptomics results after manual execution of other stPipe functions.
+create_dir: FALSE

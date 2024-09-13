@@ -1,0 +1,20 @@
+---
+title: "stPipe-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{stPipe-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(stPipe)
+library(curl)
+```
