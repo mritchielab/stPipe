@@ -12,15 +12,11 @@ output:
 # library necessary libraries and load demo date
 library(stPipe)
 library(curl)
-library(knitr)
-library(rmarkdown)
-library(ggplot2)
-library(magick)
 ```
 
 ```{r}
 # Firstly we run the 'Run_ST' function which basically processes FASTQ files directly to gene count matrix; remember always keep your input config file consistent
-mousebrain_visium <- Run_ST(config = "~/Desktop/config_stPipe.yml", show.config = FALSE)
+mousespleen_visium <- Run_ST(config = "~/Desktop/config_stPipe.yml", show.config = FALSE)
 ```
 
 ```{r}
