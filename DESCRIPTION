@@ -1,12 +1,18 @@
 Package: stPipe
 Type: Package
 Title: Upstream pre-processing for Sequencing-Based Spatial Transcriptomics
-Version: 0.1.0
-Author: Yang Xu
-Maintainer: Yang Xu <xu.ya@wehi.edu.au>
-Description: This package provides a comprehensive pipeline for preprocessing sequencing-based spatial transcriptomics data, including FASTQ trimming, BAM file reformatting, index building, spatial barcode detection, demultiplexing, gene count matrix generation with UMI deduplication, QC, and revelant visualization. Config is an essential input for most of the functions which aims to improve reproducibility.
+Version: 1.0.0
+Authors@R: c(person("Yang", "Xu", role=c("aut", "cre"), email="xu.ya@wehi.edu.au", comment=c(ORCID="0009-0008-3274-6516")), 
+        person("Callum", "Sargeant", role=c("aut"), email="sargeant.ca@wehi.edu.au"), 
+        person("Shian", "Su", role=c("aut"), email="su.s@wehi.edu.au"), 
+        person("Luyi", "Tian", role=c("aut"), email="tian.l@wehi.edu.au"), 
+        person("Yunshun", "Chen", role=c("ctb"), email="yuchen@wehi.edu.au"), 
+        person("Matthew", "Ritchie", role=c("ctb"), email="mritchie@wehi.edu.au"))
+biocViews: ImmunoOncology, Software, Sequencing, RNASeq, GeneExpression, SingleCell, Visualization,
+        SequenceMatching, Preprocessing, QualityControl, GenomeAnnotation, DataImport, Spatial, Transcriptomics, Clustering
+Description: This package serves as an upstream pipeline for pre-processing sequencing-based spatial transcriptomics data. Functions includes FASTQ trimming, BAM file reformatting, index building, spatial barcode detection, demultiplexing, gene count matrix generation with UMI deduplication, QC, and revelant visualization. Config is an essential input for most of the functions which aims to improve reproducibility.
 Depends:
-    R (>= 4.0.0)
+    R (>= 4.3.0)
 Imports:
     AnnotationDbi,
     curl,
@@ -14,24 +20,43 @@ Imports:
     DropletUtils,
     dplyr,
     ggplot2,
-    org.Hs.eg.db,
+    methods,
+    parallel,
     patchwork,
+    pbmcapply,
+    org.Hs.eg.db,
     reticulate,
     rmarkdown,
+    Rcpp,
+    RcppArmadillo,
+    rhdf5,
+    Rhdf5lib,
+    Rhtslib,
     Rsubread,
     Rtsne,
     scales,
     scPipe,
+    shiny,
     SingleCellExperiment,
     SpatialExperiment,
+    stats,
     umap,
     viridis,
     yaml
+LinkingTo: 
+    Rcpp, Rhdf5lib, testthat
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
-RoxygenNote: 7.3.1
+LazyData: false
+RoxygenNote: 7.3.2
+URL: https://github.com/mritchielab/stPipe
+BugReports: https://github.com/mritchielab/stPipe
 Suggests: 
     knitr,
-    rmarkdown
+    plotly,
+    rmarkdown,
+    shiny,
+    testthat (>= 3.0.0),
+    umap
 VignetteBuilder: knitr
+Config/testthat/edition: 3

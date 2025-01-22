@@ -16,12 +16,43 @@ Run_QC(config, matched.data, gene.matrix, show.config = TRUE)
 \item{show.config}{Logical value indicating whether to print the configuration. Defaults to TRUE.}
 }
 \value{
-A list containing filtered gene counts and spatial coordinates after QC.
+A list containing filtered gene counts with matched spatial coordinates after QC.
 }
 \description{
-This function performs QC control on sequencing-based spatial transcriptomics data after upstream pre-processing step such as 'Run_ST' step.
+QC Control After Upstream Pre-Processing for Sequencing-Based Spatial Transcriptomics
+}
+\details{
+This function performs QC control on sequencing-based spatial transcriptomics data after upstream pre-processing step such as 'Run_ST' step. Ensure the output directory is the same with the 'Run_ST' one.
 Filtering is performed either use specific UMI threshold or assign the threshold to 'DropletUtils'.
+
+"max_slope"
+
+In this approach, the filtering is done based on UMI counts.
+Spots with counts below a certain threshold are considered low-quality and are filtered out.
+This method helps retain only the spots with significant transcriptomic signals, reducing noise
+from sptos with minimal or no meaningful biological information.
+
+Threshold Determination:
+The threshold in this method is computed by analyzing the distribution of UMI counts across spots,
+and identifying the point of maximum slope in the cumulative UMI distribution curve.
+This point often corresponds to the transition between background noise and real biological signals.
+
+"EmptyDropletUtils"
+
+Alternatively, the \code{DropletUtils} package offers a more sophisticated approach
+by using statistical methods to identify droplets or spots that contain real cells, as opposed
+to empty droplets or those containing background RNA. This method calculates a
+false discovery rate (FDR) to assess the likelihood of each droplet containing a real cell. Sptos are retained if they meet the significance criteria for either the p-value or FDR.
+To learn more details regarding \code{DropletUtils}, visit
+\href{https://bioconductor.org/packages/release/bioc/html/DropletUtils.html}{this link to its Bioconductor page}.
+
+Multiple Thresholds:
+This method will determine two thresholds based on the config file input parameters.
+Filtering can be fine-tuned using both p-value and FDR thresholds, offering greater flexibility in distinguishing between noise and meaningful data.
+Sptos are retained if they meet the significance criteria for either the p-value or FDR.
 }
 \examples{
-qc.results <- Run_QC(config = "~/Desktop/config_stPipe.yml", matched.data = matching, gene.matrix = gene_count, show.config = TRUE)
+\dontrun{
+qc.results <- Run_QC(config = "path/to/config_stPipe.yml", matched.data = matching, gene.matrix = gene_count)
+}
 }

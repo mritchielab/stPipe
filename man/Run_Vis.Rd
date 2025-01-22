@@ -2,7 +2,7 @@
 % Please edit documentation in R/Run_Vis.R
 \name{Run_Vis}
 \alias{Run_Vis}
-\title{Run_Vis: Visualize Spatial-Level and Read-Level Information for pre-processed sST data.}
+\title{Visualize pre-processed sST data}
 \usage{
 Run_Vis(
   matched.data = NULL,
@@ -23,9 +23,14 @@ Run_Vis(
 
 \item{show.config}{Logical value indicating whether to print the configuration. Defaults to TRUE.}
 }
+\value{
+A list contains spatial and read level visualization results.
+}
 \description{
-This function visualizes both spatial-level and read-level information either before or after the 'Run_QC' step. It outputs both raw and log-transformed UMI count plots for spatial data, and demultiplexing and mapping statistics for read-level data.
+This function visualizes both spatial-level and read-level information either before or after the 'Run_QC' step. It outputs raw and log-transformed UMI count plots for spatial flag, and demultiplexing and mapping statistics for read flag.
 }
 \examples{
-Visresult <- Run_Vis(matched.data = matching, config = "~/Desktop/config_stPipe.yml", Vis.spatial = TRUE, Vis.read = TRUE, show.config = TRUE)
+\dontrun{
+Vis.results <- Run_Vis(matched.data = matching, config = "/path/to/config_stPipe.yml", Vis.spatial = TRUE, Vis.read = TRUE, show.config = TRUE)
+}
 }

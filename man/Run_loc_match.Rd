@@ -2,21 +2,27 @@
 % Please edit documentation in R/Run_loc_match.R
 \name{Run_loc_match}
 \alias{Run_loc_match}
-\title{Match spatial location After Upstream Pre-Processing for Sequencing-Based Spatial Transcriptomics}
+\title{Match spatial location After Pre-Processing for Sequencing-Based Spatial Transcriptomics}
 \usage{
-Run_loc_match(config, show.config = TRUE)
+Run_loc_match(config, pixel = FALSE, show.config = TRUE)
 }
 \arguments{
 \item{config}{Path to the YAML configuration file.}
 
+\item{pixel}{Computing spot pixel or not. If yes, compute pixel for each spot and map back to image; if not, map the Visium coordination system. Defaults to FALSE.}
+
 \item{show.config}{Logical value indicating whether to print the configuration. Defaults to TRUE.}
 }
 \value{
-A data frame contains filtered gene counts and spatial coordinates
+A data frame contains gene count matrix with spatial coordinates
 }
 \description{
-This function matches spatial coordinates from sequencing-based spatial transcriptomics data after upstream pre-processing.
+This function matches spatial coordinates for sST data after upstream pre-processing.
+'Run_loc_match' can either map the technology coordination system (such as spot in Visium coordination, bead in Slide-seq coordination)
+or compute pixel for each spot and map the pixel information back to the image (only for Visium)
 }
 \examples{
-matching <- Run_loc_match(config = "~/Desktop/config_stPipe.yml", show.config = TRUE)
+\dontrun{
+matching <- Run_loc_match(config = "~/config_stPipe.yml", pixel = FALSE, show.config = TRUE)
+}
 }

@@ -1,22 +1,57 @@
-#' QC Control After Upstream Pre-Processing for Sequencing-Based Spatial Transcriptomics
+#####################################################
+# Perform QC filtering for sST preliminary results
+#####################################################
+
+#' @name Run_QC
+#' @title QC Control After Upstream Pre-Processing for Sequencing-Based Spatial Transcriptomics
+#' @details
 #'
-#' This function performs QC control on sequencing-based spatial transcriptomics data after upstream pre-processing step such as 'Run_ST' step.
+#' This function performs QC control on sequencing-based spatial transcriptomics data after upstream pre-processing step such as 'Run_ST' step. Ensure the output directory is the same with the 'Run_ST' one.
 #' Filtering is performed either use specific UMI threshold or assign the threshold to 'DropletUtils'.
+#'
+#' "max_slope"
+#'
+#' In this approach, the filtering is done based on UMI counts.
+#' Spots with counts below a certain threshold are considered low-quality and are filtered out.
+#' This method helps retain only the spots with significant transcriptomic signals, reducing noise
+#' from sptos with minimal or no meaningful biological information.
+#'
+#' Threshold Determination:
+#' The threshold in this method is computed by analyzing the distribution of UMI counts across spots,
+#' and identifying the point of maximum slope in the cumulative UMI distribution curve.
+#' This point often corresponds to the transition between background noise and real biological signals.
+#'
+#' "EmptyDropletUtils"
+#'
+#' Alternatively, the \code{DropletUtils} package offers a more sophisticated approach
+#' by using statistical methods to identify droplets or spots that contain real cells, as opposed
+#' to empty droplets or those containing background RNA. This method calculates a
+#' false discovery rate (FDR) to assess the likelihood of each droplet containing a real cell. Sptos are retained if they meet the significance criteria for either the p-value or FDR.
+#' To learn more details regarding \code{DropletUtils}, visit
+#' \href{https://bioconductor.org/packages/release/bioc/html/DropletUtils.html}{this link to its Bioconductor page}.
+#'
+#' Multiple Thresholds:
+#' This method will determine two thresholds based on the config file input parameters.
+#' Filtering can be fine-tuned using both p-value and FDR thresholds, offering greater flexibility in distinguishing between noise and meaningful data.
+#' Sptos are retained if they meet the significance criteria for either the p-value or FDR.
 #' @param config Path to the YAML configuration file.
 #' @param matched.data A data frame containing spatial transcriptomics data, including UMI counts and spatial coordinates, this is usually obtained from 'Run_loc_match' function.
 #' @param gene.matrix A gene count matrix, this is usually obtained from 'Run_ST' function.
 #' @param show.config Logical value indicating whether to print the configuration. Defaults to TRUE.
 #' @export
-#' @return A list containing filtered gene counts and spatial coordinates after QC.
+#' @return A list containing filtered gene counts with matched spatial coordinates after QC.
+#' @examples
+#' \dontrun{
+#' qc.results <- Run_QC(config = "path/to/config_stPipe.yml", matched.data = matching, gene.matrix = gene_count)
+#' }
 #' @importFrom ggplot2 ggplot scale_fill_brewer aes geom_bar geom_text theme_minimal theme labs ggsave element_text geom_point scale_color_gradient element_blank element_rect xlim ylim geom_segment geom_line geom_hline arrow unit
 #' @importFrom dplyr %>%
-#' @examples qc.results <- Run_QC(config = "~/Desktop/config_stPipe.yml", matched.data = matching, gene.matrix = gene_count, show.config = TRUE)
+#' @importFrom stats quantile na.omit
+
 
 Run_QC <- function(config, matched.data, gene.matrix, show.config = TRUE) {
 
-  # Read configuration from the provided YAML file
   config <- yaml::read_yaml(config)
-  # Conditionally print config if show_config is TRUE
   if (show.config) {
     print(config)
   }
@@ -27,18 +62,14 @@ Run_QC <- function(config, matched.data, gene.matrix, show.config = TRUE) {
   qc_per_lower <- as.numeric(qc_per[1])
   qc_per_retain <- as.numeric(qc_per[2])
 
-  # Set the working directory to the output directory
-  setwd(output_directory)
-
-  # Create a new directory named 'upstream_QC' within the output directory
+  # New directory named 'upstream_QC' under output directory
   qc_dir <- file.path(output_directory, "upstream_QC")
   if (!dir.exists(qc_dir)) {
     dir.create(qc_dir)
   }
-  setwd(qc_dir)
   gene_count <- gene.matrix
   sum_counts <- colSums(gene_count[, -1])
-  spatial_coords <- matched.data[, c("X_coordinate", "Y_coordinate", "barcode_sequence", "cell_name")]
+  spatial_coords <- matched.data[, c("X_coordinate", "Y_coordinate", "barcode_sequence", "spatial_name")]
 
   # Barcode quality filtering
   quantiles <- quantile(sum_counts, probs = seq(0, 1, 0.01))
@@ -90,11 +121,8 @@ Run_QC <- function(config, matched.data, gene.matrix, show.config = TRUE) {
     filtered_gene_count <- gene_count_ED[, which(is.both), drop = FALSE]
   }
 
-  spatial_coords <- spatial_coords[spatial_coords$cell_name %in% names(keep_cells) & spatial_coords$cell_name %in% colnames(filtered_gene_count), ]
-  spatial_coords$UMI_count <- sum_counts[spatial_coords$cell_name]
-  write.csv(filtered_gene_count, file = "filtered_gene_count.csv")
-  write.csv(spatial_coords, file = "filtered_spatial_loc.csv")
+  spatial_coords <- spatial_coords[spatial_coords$spatial_name %in% names(keep_cells) & spatial_coords$spatial_name %in% colnames(filtered_gene_count), ]
+  spatial_coords$UMI_count <- sum_counts[spatial_coords$spatial_name]
 
-  # Return filtered results
   return(list(filtered_gene_count = filtered_gene_count, filtered_spatial_coords = spatial_coords))
 }

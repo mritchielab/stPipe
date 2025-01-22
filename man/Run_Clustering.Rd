@@ -2,18 +2,38 @@
 % Please edit documentation in R/Run_Clustering.R
 \name{Run_Clustering}
 \alias{Run_Clustering}
-\title{Run_Clustering: Perform Basic Clustering Algorithms}
+\title{Perform Basic Clustering Algorithms}
 \usage{
-Run_Clustering(gene.count, matched.data)
+Run_Clustering(gene.count, matched.data, path, num_clusters = 5)
 }
 \arguments{
 \item{gene.count}{A data frame containing gene count data with gene IDs as row names.}
 
 \item{matched.data}{A data frame containing matched spatial coordinates with raw UMI counts.}
+
+\item{num_clusters}{Number of clusters during clustering. Default set to five.}
+}
+\value{
+A list which contains interactive clustering visualization result with related data frames.
 }
 \description{
-This function performs basic clustering using t-SNE and UMAP, either before or after the QC step and outputs visualizations to output directory.
+This function performs basic clustering using t-SNE and UMAP, either before or after the QC step and outputs visualizations results.
+}
+\details{
+T-SNE (t-Distributed Stochastic Neighbor Embedding)
+
+T-SNE is a popular dimensionality reduction technique used to project high-dimensional data into two or three dimensions.
+It optimizes for preserving the local structure of the data, meaning that points that are close to each other in high-dimensional space will remain close in the lower-dimensional representation.
+This method is widely used in single-cell RNA-seq and spatial transcriptomics to explore the heterogeneity of the data and identify cells or spatial regions with similar expression profiles.
+
+UMAP (Uniform Manifold Approximation and Projection)
+
+UMAP is another popular dimensionality reduction technique that aims to preserve both the local and global structures of the data, with a stronger emphasis on efficiency.
+It excels at handling large datasets, generating low-dimensional projections in less time compared to T-SNE.
+Unlike T-SNE, UMAP seeks to retain both local and global data structures, making it more suitable for capturing broad clustering patterns across the datasets.
 }
 \examples{
-clustering.result <- Run_Clustering(gene.count = gene_count, matched.data =  matching)
+\dontrun{
+clustering.result <- Run_Clustering(gene.count = gene_count, matched.data = matching, num_clusters = 5)
+}
 }

@@ -1,0 +1,35 @@
+########## Config File ##########
+### 'Run_ST' ###
+# Directory stores paired FASTQ files, for multiple samples should be separated by ','
+data_directory: /path/to/FASTQ
+# Directory stores outputs, for multiple samples should be separated by ','
+output_directory: /path/to/output
+species: mouse     # "human"; "mouse"
+index_fa: /path/to/genome.fa     # for polyA-based protocol only
+index_gff3: /path/to/anno.gff3    # for polyA-based protocol only
+# read_structure design, positions are 0-indexed so the first base is considered base 0
+bs1: -1     # barcode start position in fq_R1, -1 indicates no barcode
+bl1: 0      # barcode length in fq_R1, 0 since no barcode present
+bs2: 0      # barcode start position in fq_R2
+bl2: 16     # barcode length in fq_R2
+us: 16      # UMI start position in fq_R2
+ul: 12      # UMI length
+ll: 0      # for Curio-seeker only - linker sequence length
+h5_mapping_path: /path/to/barcodeToPos.h5     # for Stereoseq only - path to mapping h5 file
+bin_size: 1     # for Stereoseq only - binning size of n * n, 1 means no binning performed
+# Rsubread::align
+scpipe_nthreads: 4     # used thread
+# scPipe::sc_detect_bc
+max_reads: 1000000000    # process first N reads
+min_count: 100           # discard barcodes with few than 100 hits
+number_of_locations: 4992   # number of mapped spatial location
+technology_version: "Visium_probe_v1"    # “Visium_probe_vn”; “Visium_polyA”; “Stereoseq”; “Slideseq”; "Curio-seeker"
+
+### 'Run_loc_match' ###
+visium_coordination: "V4"     # for Visium only - chip chemistry version
+image_path: /path/to/Image.tif     # for Visium only - path to image file
+bead_location: /path/to/bead_locations.csv     # for Slideseq/Curio-seeker only - path to sample coordination file
+
+### 'Run_QC' ###
+qc_filter: EmptyDropletUtils     # 'slope_max' [exact raw UMI count filter] or 'EmptyDropletUtils' [DropletUtils::emptyDrops]
+qc_per: 0.1_0.8     # threshold for calculating max slope [i.e., 0.4 - first 40%]

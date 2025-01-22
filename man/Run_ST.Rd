@@ -2,7 +2,7 @@
 % Please edit documentation in R/Run_ST.R
 \name{Run_ST}
 \alias{Run_ST}
-\title{Run_ST: Pre-process from FASTQ files to gene count matrix and extract spatial location information}
+\title{Pre-processing function for sequencing-based spatial transcriptomics}
 \usage{
 Run_ST(config, show.config = TRUE)
 }
@@ -11,10 +11,17 @@ Run_ST(config, show.config = TRUE)
 
 \item{show.config}{Logical value indicating whether to print the configuration. Defaults to TRUE.}
 }
+\value{
+None. Outputs are saved to specified directories.
+}
 \description{
+Pre-processing from FASTQ files to gene count matrix and extract spatial location information,
+processing multiple sample is done via parallel computing. NB: for multiple samples, 'species' and 'technology_version' should be the same.
 This function processes sequencing-based spatial transcriptomics data using various steps, including BAM to FASTQ conversion, trimming, index building, alignment, and barcode detection.
 For Slideseq technology, the input should be BAM file and for all other technologies the input should be FASTQ file.
 }
 \examples{
-mousebrain_visium <- Run_ST(config = "~/Desktop/config_stPipe.yml", show.config = TRUE)
+\dontrun{
+Run_ST(config = demo_config_path, show.config = TRUE)
+}
 }
