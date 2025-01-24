@@ -69,8 +69,8 @@ data_directory <- file.path(tempdir(), "stPipe_demo_data")
 if (!dir.exists(data_directory)) {
   dir.create(data_directory, recursive = TRUE)
 }
-R1_url <- "https://raw.githubusercontent.com/mritchielab/stPipe/main/demo_data/stPipe_demo_R1.fq.gz"
-R2_url <- "https://raw.githubusercontent.com/mritchielab/stPipe/main/demo_data/stPipe_demo_R2.fq.gz"
+R1_url <- "https://github.com/YangXuuu/demo_data_stPipe/raw/refs/heads/main/stPipe_demo_R1.fq.gz"
+R2_url <- "https://github.com/YangXuuu/demo_data_stPipe/raw/refs/heads/main/stPipe_demo_R2.fq.gz"
 R1_path <- file.path(data_directory, "stPipe_demo_R1.fq.gz")
 R2_path <- file.path(data_directory, "stPipe_demo_R2.fq.gz")
 download.file(R1_url, R1_path)
