@@ -22,3 +22,5 @@ The stPipe vignette can be found using:
 # stPipe must be installed
 browseVignettes("stPipe")
 ```
+
+10X Visium data used in vignette can be found [here](https://github.com/YangXuuu/demo_data_stPipe).
