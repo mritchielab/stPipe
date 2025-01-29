@@ -23,4 +23,4 @@ The stPipe vignette can be found using:
 browseVignettes("stPipe")
 ```
 
-Sample 10X Visium data used in the vignette can be found [here](https://github.com/YangXuuu/demo_data_stPipe).
+Sample 10X Visium data used in the vignette along with its HTML report can be found [here](https://github.com/YangXuuu/demo_data_stPipe).
