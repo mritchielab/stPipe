@@ -1,7 +1,7 @@
 Package: stPipe
 Type: Package
 Title: Upstream pre-processing for Sequencing-Based Spatial Transcriptomics
-Version: 1.0.0
+Version: 0.99.0
 Authors@R: c(person("Yang", "Xu", role=c("aut", "cre"), email="xu.ya@wehi.edu.au", comment=c(ORCID="0009-0008-3274-6516")), 
         person("Callum", "Sargeant", role=c("aut"), email="sargeant.ca@wehi.edu.au"), 
         person("Shian", "Su", role=c("aut"), email="su.s@wehi.edu.au"), 
@@ -50,7 +50,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
 URL: https://github.com/mritchielab/stPipe
-BugReports: https://github.com/mritchielab/stPipe
+BugReports: https://github.com/mritchielab/stPipe/issues/new
 Suggests: 
     knitr,
     plotly,
