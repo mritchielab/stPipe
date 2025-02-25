@@ -23,4 +23,4 @@ The stPipe vignette can be found using:
 browseVignettes("stPipe")
 ```
 
-Sample 10X Visium data used in the vignette along with its HTML report can be found [here](https://github.com/YangXuuu/demo_data_stPipe).
+Sample 10X Visium data is a downsampled paired-end FASTQ data 10X Visium, probe-based, FFPE mouse spleen sample 709. It can be downloaded from [here](https://zenodo.org/records/14920583), and for detailed sample description please see [here](https://www.biorxiv.org/content/10.1101/2024.03.13.584910v1.abstract).
