@@ -44,7 +44,7 @@ Imports:
     viridis,
     yaml
 LinkingTo: 
-    Rcpp, Rhdf5lib, testthat
+    Rcpp, Rhdf5lib, testthat, Rhtslib, zlibbioc
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
