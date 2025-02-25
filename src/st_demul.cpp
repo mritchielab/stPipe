@@ -27,6 +27,7 @@
 #include "progressbar.hpp"
 #include <zlib.h>
 #include <htslib/kseq.h>
+#include <htslib/hts.h>
 #include "Rcpp.h"
 using namespace Rcpp;
 
