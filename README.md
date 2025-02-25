@@ -23,4 +23,4 @@ The stPipe vignette can be found using:
 browseVignettes("stPipe")
 ```
 
-Sample 10X Visium data is a downsampled paired-end FASTQ data 10X Visium, probe-based, FFPE mouse spleen sample 709. It can be downloaded from [here](https://zenodo.org/records/14920583), and for detailed sample description please see [here](https://www.biorxiv.org/content/10.1101/2024.03.13.584910v1.abstract).
+The sample data is downsampled from a 10X Visium mouse spleen sample (Sample 709). It is a probe-based, FFPE tissue dataset generated from paired-end FASTQ files. The data can be downloaded from [Zenodo](https://zenodo.org/records/14920583), and a detailed sample description is available in the [SpatialBench paper](https://www.biorxiv.org/content/10.1101/2024.03.13.584910v1.abstract).
