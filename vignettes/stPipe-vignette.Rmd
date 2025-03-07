@@ -174,12 +174,6 @@ Vis.results <- Run_Vis(
 Vis.results$demultiplex_plot
 ```
 
-***UMI duplication number distribution***  this plot evaluates read depth. UMIs are routinely used to mark individual molecules and after PCR amplification, the same molecule with have multiple copys, which can be identified and removed if they are observed to have the same UMI sequence. Therefore, the copy number of UMIs is an indication of the PCR amplification rate.
-
-```{r,eval=TRUE, fig.height=7, fig.width=7, warning=FALSE}
-Vis.results$duplication_plot
-```
-
 ***Mapping statistics***  this plot shows the mapping quality of sample. In this demo case, the 10X Visium data is generated as probe-based, hence either mapped to exon or unaligned will be observed. For polyA-based protocols, mixed variable should be expected. 
 
 ```{r,eval=TRUE, fig.height=7, fig.width=7}
