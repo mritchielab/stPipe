@@ -38,7 +38,7 @@ Run_Clustering <- function(gene.count, matched.data, path, num_clusters = 5) {
   # UMAP
   umap_results <- umap::umap(gene_count_t)
   # t-SNE
-  tsne_result <- Rtsne::Rtsne(gene_count_t, dims = 2, perplexity = 30, verbose = TRUE, max_iter = 5000, partial_pca = TRUE)
+  tsne_result <- Rtsne::Rtsne(gene_count_t, dims = 2, perplexity = 30, verbose = TRUE, max_iter = 1000, partial_pca = TRUE)
 
   # Create data frames for UMAP and t-SNE results
   umap_df <- data.frame(
@@ -54,12 +54,12 @@ Run_Clustering <- function(gene.count, matched.data, path, num_clusters = 5) {
   )
 
   # K-means clustering on UMAP results
-  kmeans_result <- stats::kmeans(umap_results$layout, centers = num_clusters)
-  kmeans_result <- stats::kmeans(tsne_result$Y, centers = num_clusters)
+  kmeans_result_umap <- stats::kmeans(umap_results$layout, centers = 5)
+  kmeans_result_tsne <- stats::kmeans(tsne_result$Y, centers = 5)
 
   # Assign cluster to UMAP and t-SNE data frames
-  umap_df$cluster <- as.factor(kmeans_result$cluster)
-  tsne_df$cluster <- as.factor(kmeans_result$cluster)  # apply clustering results to t-SNE
+  umap_df$cluster <- as.factor(kmeans_result_umap$cluster)
+  tsne_df$cluster <- as.factor(kmeans_result_tsne$cluster)  # apply clustering results to t-SNE
 
   # Merge UMAP and t-SNE results with matched data
   merged_data_umap <- merge(umap_df, matched.data, by.x = "spot", by.y = "spatial_name", all.x = TRUE)
