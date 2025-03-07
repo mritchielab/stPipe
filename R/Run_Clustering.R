@@ -35,22 +35,21 @@ Run_Clustering <- function(gene.count, matched.data, path, num_clusters = 5) {
   # Remove duplicates before running t-SNE and UMAP
   gene_count_t <- unique(gene_count_t)
 
-  # UMAP
+  # UMAP & t-SNE
   umap_results <- umap::umap(gene_count_t)
-  # t-SNE
   tsne_result <- Rtsne::Rtsne(gene_count_t, dims = 2, perplexity = 30, verbose = TRUE, max_iter = 1000, partial_pca = TRUE)
 
   # Create data frames for UMAP and t-SNE results
   umap_df <- data.frame(
-    UMAP1 <- umap_results$layout[, 1],
-    UMAP2 <- umap_results$layout[, 2],
-    spot <- rownames(gene_count_t)
+    UMAP1 = umap_results$layout[, 1],
+    UMAP2 = umap_results$layout[, 2],
+    spot = rownames(gene_count_t)
   )
 
   tsne_df <- data.frame(
-    TSNE1 <- tsne_result$Y[, 1],
-    TSNE2 <- tsne_result$Y[, 2],
-    spot <- rownames(gene_count_t)
+    TSNE1 = tsne_result$Y[, 1],
+    TSNE2 = tsne_result$Y[, 2],
+    spot = rownames(gene_count_t)
   )
 
   # K-means clustering on UMAP results
