@@ -2,7 +2,7 @@
 # Visualization for sST upstream results
 #####################################################
 
-#' @name Run_Vis
+#' @name Run_Visualization
 #' @title Visualize pre-processed sST data
 #' @description This function visualizes both spatial-level and read-level information either before or after the 'Run_QC' step. It outputs raw and log-transformed UMI count plots for spatial flag, and demultiplexing and mapping statistics for read flag.
 #' @param config Path to the YAML configuration file.
@@ -13,12 +13,12 @@
 #' @return A list contains spatial and read level visualization results.
 #' @examples
 #' \dontrun{
-#' Vis.results <- Run_Vis(matched.data = matching, config = "/path/to/config_stPipe.yml", Vis.spatial = TRUE, Vis.read = TRUE, show.config = TRUE)
+#' Vis.results <- Run_Visualization(matched.data = matching, config = "/path/to/config_stPipe.yml", Vis.spatial = TRUE, Vis.read = TRUE, show.config = TRUE)
 #' }
 #' @export
 #' @importFrom ggplot2 ggplot scale_fill_brewer aes geom_bar geom_text theme_minimal theme labs element_text geom_point scale_color_gradient element_blank element_rect xlim ylim
 
-Run_Vis <- function(matched.data = NULL, config, Vis.spatial = TRUE, Vis.read = TRUE, show.config = TRUE) {
+Run_Visualization <- function(matched.data = NULL, config, Vis.spatial = TRUE, Vis.read = TRUE, show.config = TRUE) {
 
   config <- yaml::read_yaml(config)
   if (show.config) {
