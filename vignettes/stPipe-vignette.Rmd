@@ -99,12 +99,12 @@ Now `stPipe` is ready to run.
 Run_ST(config = demo_config_path, show.config = FALSE)
 ```
 
-## Organising config file for `stPipe::Run_loc_match`
+## Organising config file for `stPipe::Run_Loc_Match`
 
-The `Run_loc_match` function is responsible for pairing the gene expression matrix with match spatial locations. The key input in the config file is **technology_version** which specifies the used platform. In further segmentation, each platform has their own argument: Visium needs **visium_coordination** to match internally stored spatial coordination system and **image_path** is optional for pixel computation; Slide-seq/Curio-seeker needs **bead_location** which should be a `.csv` file with three columns, where the first column has the spatial barcode sequence, the second column contains the X coordinate, and the third column contains the Y coordinate. to match bead location across the spatial dimension. Stereo-seq only requires **technology_version**.
+The `Run_Loc_Match` function is responsible for pairing the gene expression matrix with match spatial locations. The key input in the config file is **technology_version** which specifies the used platform. In further segmentation, each platform has their own argument: Visium needs **visium_coordination** to match internally stored spatial coordination system and **image_path** is optional for pixel computation; Slide-seq/Curio-seeker needs **bead_location** which should be a `.csv` file with three columns, where the first column has the spatial barcode sequence, the second column contains the X coordinate, and the third column contains the Y coordinate. to match bead location across the spatial dimension. Stereo-seq only requires **technology_version**.
 
 ```{r,eval=TRUE}
-st.result <- Run_loc_match(config = demo_config_path, pixel = FALSE, show.config = FALSE)
+st.result <- Run_Loc_Match(config = demo_config_path, pixel = FALSE, show.config = FALSE)
 head(st.result$matched_data)
 ```
 
@@ -154,12 +154,12 @@ Previously the `Run_QC` function serves as a step to get rid of spatial location
 )
 ```
 
-## Organising config file for `stPipe::Run_Vis`
+## Organising config file for `stPipe::Run_Visualization`
 
-`Run_Vis` is the step where you want to check the how the data looks like after a series of pre-processing steps. This function contains two flags for visualization, `Vis.spatial` and `Vis.read` corresponds to spatial visualization and sequencing visualization respectively. The former one contains UMI heatmap in raw value and log format. The latter includes barcode demultiplexing statistics, distribution of UMI duplication numbers, and alignment statistics.
+`Run_Visualization` is the step where you want to check the how the data looks like after a series of pre-processing steps. This function contains two flags for visualization, `Vis.spatial` and `Vis.read` corresponds to spatial visualization and sequencing visualization respectively. The former one contains UMI heatmap in raw value and log format. The latter includes barcode demultiplexing statistics, distribution of UMI duplication numbers, and alignment statistics.
 
 ```{r,eval=TRUE}
-Vis.results <- Run_Vis(
+Vis.results <- Run_Visualization(
   matched.data = st.result$matched_data,
   config = demo_config_path,
   Vis.spatial = TRUE,
@@ -191,7 +191,7 @@ Vis.results$log_UMI_plot
 
 After all the previous work, a HTML report in RMarkDown format can be generated to summarize your data and save it for further documentation archive purposes. The `Run_HTML` function can help with this. **NOTE**: You will need to include ALL previous outputs to ensure the successful operation of this function.
 
-Upstream pre-processing is never the end of exploring data in research, the `Run_create_obj` function is designed for further downstream analysis, catering for different pipeline such as `Seurat`, `Squidpy`, and `SpatialExperiment` supported bioconductor packages.
+Upstream pre-processing is never the end of exploring data in research, the `Run_Create_Obj` function is designed for further downstream analysis, catering for different pipeline such as `Seurat`, `Squidpy`, and `SpatialExperiment` supported bioconductor packages.
 
 <details>
 <summary>Session Info</summary>
