@@ -2,7 +2,7 @@
 # Perform spatial location matching for gene count matrix
 #####################################################
 
-#' @name Run_loc_match
+#' @name Run_Loc_Match
 #' @title Match spatial location After Pre-Processing for Sequencing-Based Spatial Transcriptomics
 #'
 #' @description This function matches spatial coordinates for sST data after upstream pre-processing.
@@ -15,11 +15,11 @@
 #' @return A data frame contains gene count matrix with spatial coordinates
 #' @examples
 #' \dontrun{
-#' matching <- Run_loc_match(config = "~/config_stPipe.yml", pixel = FALSE, show.config = TRUE)
+#' matching <- Run_Loc_Match(config = "~/config_stPipe.yml", pixel = FALSE, show.config = TRUE)
 #' }
 #' @export
 
-Run_loc_match <- function(config, pixel = FALSE, show.config = TRUE) {
+Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
 
   config <- yaml::read_yaml(config)
   if (show.config) {
