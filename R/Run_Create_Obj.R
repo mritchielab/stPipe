@@ -2,7 +2,7 @@
 # Generate downstream objects for mainstream tools for further analysis
 #####################################################
 
-#' @name Run_create_obj
+#' @name Run_Create_Obj
 #' @title This function creates specified spatial transcriptomics data object for further personalized downstream analysis
 #' @details Current mainstream analytic tools for downstream includes: Seurat, SpatialExperiment supported tools, and Squidpy.
 #' This function can help creates corresponding objects for further downstream analysis.
@@ -15,12 +15,12 @@
 #' @return Created spatial transcriptomics data object as required by 'obj.type'.
 #' #' @examples
 #' \dontrun{
-#' my_ST_Obj <- Run_create_obj(gene.matrix = gene_count, matched.data = matched_spatial_barcode, obj.type = "SpatialExperiment", tech = "Visium")
+#' my_ST_Obj <- Run_Create_Obj(gene.matrix = gene_count, matched.data = matched_spatial_barcode, obj.type = "SpatialExperiment", tech = "Visium")
 #' }
 #' @export
 #' @importFrom ggplot2 theme
 
-Run_create_obj <- function(gene.matrix, matched.data, obj.type, tech, ss.radius = 3000) {
+Run_Create_Obj <- function(gene.matrix, matched.data, obj.type, tech, ss.radius = 3000) {
 
   if (!all(matched.data$cell_name %in% colnames(gene_count))) {
     stop("Spatial locations in matched.data do not match column names of gene.matrix!")
