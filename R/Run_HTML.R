@@ -54,17 +54,17 @@ Run_HTML <- function(path) {
   #                            filtered_out, filtered_gene_count_len)
 
   # replace placeholder
+  #rmd_content <- gsub("<<bar_plot_path>>", bar_plot_path, rmd_content)
+  #rmd_content <- gsub("<<filtered_out>>", filtered_out, rmd_content)
+  #rmd_content <- gsub("<<filtered_gene_count_len>>", filtered_gene_count_len, rmd_content)
+  #rmd_content <- gsub("description_text", description_text, rmd_content
   rmd_content <- gsub("<<path>>", path, rmd_template)
   rmd_content <- gsub("<<Mapping_statistics_plot>>", Mapping_statistics_plot, rmd_content)
   rmd_content <- gsub("<<UMI_duplication_plot>>", UMI_duplication_plot, rmd_content)
   rmd_content <- gsub("<<Barcode_demultiplexing_plot>>", Barcode_demultiplexing_plot, rmd_content)
   rmd_content <- gsub("<<Spatial_Heatmap_of_UMI_Count_raw>>", Spatial_Heatmap_of_UMI_Count_raw, rmd_content)
   rmd_content <- gsub("<<Spatial_Heatmap_of_UMI_Count_log>>", Spatial_Heatmap_of_UMI_Count_log, rmd_content)
-  rmd_content <- gsub("<<bar_plot_path>>", bar_plot_path, rmd_content)
-  rmd_content <- gsub("<<filtered_out>>", filtered_out, rmd_content)
-  rmd_content <- gsub("<<filtered_gene_count_len>>", filtered_gene_count_len, rmd_content)
   rmd_content <- gsub("<<Threshold>>", Threshold, rmd_content)
-  rmd_content <- gsub("description_text", description_text, rmd_content)
   rmd_content <- gsub("<<tsne_interactive>>", tsne_interactive, rmd_content)
   rmd_content <- gsub("<<umap_interactive>>", umap_interactive, rmd_content)
 
