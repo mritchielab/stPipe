@@ -78,17 +78,11 @@ knitr::include_graphics('<<Spatial_Heatmap_of_UMI_Count_log>>')
 
 ## Spatial location number before and after **'Run_QC'** step
 
-This barplot suggests the number of spots/bins/beads/nanoballs before and after the **'Run_QC'** step. For 10X Visium, **'Run_QC'** step aims to remove the background noise outside the captured tissue. For other technologies such as Slideseq, **'Run_QC'** step aims to remove low quality spatial location which would not impact further downstream analysis.
+The number of spots/bins/beads/nanoballs before and after the **'Run_QC'** step is critical. For 10X Visium, **'Run_QC'** step aims to remove the background noise outside the captured tissue. For other technologies such as Slideseq, **'Run_QC'** step aims to remove low quality spatial location which would not impact further downstream analysis.
 
 ### Importance
 
 It is important to get information from the spatial locations removed by **'Run_QC'**, since doing quality control is a kind of "fine tuning" process - you don't want to remove too much information but do want to get rid of nosiy data.
-
-```{r, echo=FALSE, out.width="50%", out.height="500px", dpi=500, fig.align="center"}
-knitr::include_graphics('<<bar_plot_path>>')
-```
-
-description_text
 
 # Clustering: T-SNE and UMAP
 
