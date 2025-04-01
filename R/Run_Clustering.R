@@ -23,13 +23,20 @@
 #' @param num_clusters Number of clusters during clustering. Default set to five.
 #' @return A list which contains interactive clustering visualization result with related data frames.
 #' @examples
-#' \dontrun{
-#' clustering.result <- Run_Clustering(gene.count = gene_count, matched.data = matching, num_clusters = 5)
-#' }
+#' set.seed(123)
+#' gene.count <- matrix(sample(0:100, 200 * 100, replace = TRUE), nrow = 200)
+#' rownames(gene.count) <- paste0("Gene", 1:200)
+#' colnames(gene.count) <- paste0("Spot", 1:100)
+#' matched.data <- data.frame(
+#'   spatial_name = paste0("Spot", 1:100),
+#'   x_coord = runif(100, 0, 10),
+#'   y_coord = runif(100, 0, 10)
+#' )
+#' result <- Run_Clustering(gene.count = gene.count, matched.data = matched.data, num_clusters = 3)
 #' @export
 #' @importFrom ggplot2 ggplot scale_fill_brewer aes geom_bar geom_text theme_minimal theme labs ggsave element_text geom_point scale_color_gradient element_blank element_rect xlim ylim scale_color_brewer
 
-Run_Clustering <- function(gene.count, matched.data, path, num_clusters = 5) {
+Run_Clustering <- function(gene.count, matched.data, num_clusters = 5) {
 
   gene_count_t <- t(gene.count)
   # Remove duplicates before running t-SNE and UMAP
