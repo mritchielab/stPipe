@@ -13,10 +13,20 @@
 #' @param ss.radius Optional. Radius for filtering SlideSeq or Curio-seeker spots for Seurat object. Default is 3000.
 #' @param tech Type of spatial transcriptomics sequencing technology, can be "Visium", "Slideseq", "Curio-seeker", or "Stereoseq".
 #' @return Created spatial transcriptomics data object as required by 'obj.type'.
-#' #' @examples
-#' \dontrun{
-#' my_ST_Obj <- Run_Create_Obj(gene.matrix = gene_count, matched.data = matched_spatial_barcode, obj.type = "SpatialExperiment", tech = "Visium")
-#' }
+#' @examples
+#' gene.matrix <- matrix(sample(1:100, 10 * 5, replace = TRUE), nrow = 10)
+#' rownames(gene.matrix) <- paste0("Gene", 1:10)
+#' colnames(gene.matrix) <- paste0("Spot", 1:5)
+#' matched.data <- data.frame(
+#' cell_name = paste0("Spot", 1:5),
+#' barcode_sequence = paste0("BC", 1:5),
+#' xcoord = runif(5, 0, 100),
+#' ycoord = runif(5, 0, 100),
+#' stringsAsFactors = FALSE)
+#' obj <- Run_Create_Obj(gene.matrix = gene.matrix, 
+#' matched.data = matched.data, 
+#' obj.type = "SpatialExperiment", 
+#' tech = "Visium")
 #' @export
 #' @importFrom ggplot2 theme
 
@@ -70,7 +80,7 @@ Run_Create_Obj <- function(gene.matrix, matched.data, obj.type, tech, ss.radius 
       coordinates = matched.data
     )
     # remove stray beads which fall outside the main Slideseq puck area
-    obj <- Seurat::FilterSlideSeq(object = obj, radius = ss.radius, do.plot = T)
+    obj <- Seurat::FilterSlideSeq(object = obj, radius = ss.radius, do.plot = TRUE)
     }
 
 
