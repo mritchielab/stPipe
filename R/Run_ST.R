@@ -10,9 +10,28 @@
 #' This function processes sequencing-based spatial transcriptomics data using various steps, including BAM to FASTQ conversion, trimming, index building, alignment, and barcode detection.
 #' For Slideseq technology, the input should be BAM file and for all other technologies the input should be FASTQ file.
 #' @examples
-#' \dontrun{
-#' Run_ST(config = demo_config_path, show.config = TRUE)
-#' }
+#' data_path <- system.file("data", package = "stPipe")
+#' output_directory <- file.path(tempdir(), "stPipe_output")
+#' config_list <- list(
+#' data_directory = data_path,          
+#' output_directory = output_directory, 
+#' technology_version = "Visium_probe_v1",       
+#' species = "mouse",                   
+#' scpipe_nthreads = 4,                
+#' max_reads = 100000,                  
+#' min_count = 10,                      
+#' number_of_locations = 100,          
+#' bs1= -1,     
+#' bl1= 0,     
+#' bs2= 0,      
+#' bl2= 16,     
+#' us= 16,      
+#' ul= 12,      
+#' ll= 0      
+#' )
+#' config_file <- tempfile(fileext = ".yml")
+#' yaml::write_yaml(config_list, config_file)
+#' Run_ST(config = config_file, show.config = FALSE)
 #' @param config Path to the YAML configuration file.
 #' @param show.config Logical value indicating whether to print the configuration. Defaults to TRUE.
 #' @return None. Outputs are saved to specified directories.
