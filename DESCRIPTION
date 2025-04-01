@@ -1,7 +1,7 @@
 Package: stPipe
 Type: Package
 Title: Upstream pre-processing for Sequencing-Based Spatial Transcriptomics
-Version: 0.99.2
+Version: 0.99.4
 Authors@R: c(person("Yang", "Xu", role=c("aut", "cre"), email="xu.ya@wehi.edu.au", comment=c(ORCID="0009-0008-3274-6516")), 
         person("Callum", "Sargeant", role=c("aut"), email="sargeant.ca@wehi.edu.au"), 
         person("Shian", "Su", role=c("aut"), email="su.s@wehi.edu.au"), 
