@@ -11,9 +11,27 @@
 #' @param reduction_method T-SNE ("tsne") or UMAP ("umap") result data frame obtained from 'Run_Clustering' function. Default set as "tsne".
 #' @param point_size Size of point shown in the spatial heatmap. Default set as 1.
 #' @examples
-#' \dontrun{
-#' Run_Interactive(matched_data = matched_data, tsne_data = clustering.result$tsne_df)
-#' }
+#' matched_data <- data.frame(
+#' X_coordinate = runif(10, 0, 100),
+#' Y_coordinate = runif(10, 0, 100),
+#' UMI_count = sample(1:100, 10),
+#' spatial_name = paste0("Spot", 1:10),
+#' stringsAsFactors = FALSE
+#' )
+#' clustering_result <- data.frame(
+#' TSNE1 = runif(10, -50, 50),
+#' TSNE2 = runif(10, -50, 50),
+#' spot = paste0("Spot", 1:10),
+#' cluster = sample(1:3, 10, replace = TRUE),
+#' stringsAsFactors = FALSE
+#' )
+#' if (interactive()) {
+#' Run_Interactive(matched_data = matched_data, 
+#'                 clustering_result = clustering_result, 
+#'                                background_img = NULL, 
+#'                                reduction_method = "tsne", 
+#'                                point_size = 1)
+#'                                }
 #' @return R-shiny interactive webpage.
 #' @export
 #' @importFrom ggplot2 ggplot scale_fill_brewer aes geom_bar geom_text theme_minimal theme labs ggsave element_text geom_point scale_color_gradient element_blank element_rect xlim ylim scale_color_brewer
