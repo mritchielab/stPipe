@@ -14,9 +14,32 @@
 #' @param show.config Logical value indicating whether to print the configuration. Defaults to TRUE.
 #' @return A data frame contains gene count matrix with spatial coordinates
 #' @examples
-#' \dontrun{
-#' matching <- Run_Loc_Match(config = "~/config_stPipe.yml", pixel = FALSE, show.config = TRUE)
-#' }
+#' data_dir <- tempdir()
+#' output_dir <- file.path(tempdir(), "Run_Loc_Match_output")
+#' if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
+#' sample_index <- data.frame(
+#'   barcode_sequence = c("BC001", "BC002", "BC003"),
+#'   cell_name = c("CELL_1", "CELL_2", "CELL_3"),
+#'   stringsAsFactors = FALSE
+#' )
+#' write.csv(sample_index, file = file.path(output_dir, "sample_index.csv"), row.names = FALSE)
+#' gene_count <- data.frame(
+#'   gene_id = c("gene1", "gene2"),
+#'   CELL_1 = c(10, 5),
+#'   CELL_2 = c(20, 10),
+#'   CELL_3 = c(30, 15),
+#'   stringsAsFactors = FALSE
+#' )
+#' write.csv(gene_count, file = file.path(output_dir, "gene_count.csv"), row.names = FALSE)
+#' config_list <- list(
+#'   output_directory = output_dir,
+#'   data_directory = data_dir,
+#'   technology_version = "Visium_probe_v1",
+#'   visium_coordination = "V1"
+#' )
+#' config_file <- tempfile(fileext = ".yml")
+#' yaml::write_yaml(config_list, config_file)
+#' result <- Run_Loc_Match(config = config_file, pixel = FALSE, show.config = FALSE)
 #' @export
 
 Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
