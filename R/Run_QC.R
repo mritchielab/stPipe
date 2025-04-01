@@ -41,9 +41,35 @@
 #' @export
 #' @return A list containing filtered gene counts with matched spatial coordinates after QC.
 #' @examples
-#' \dontrun{
-#' qc.results <- Run_QC(config = "path/to/config_stPipe.yml", matched.data = matching, gene.matrix = gene_count)
-#' }
+#' output_dir <- tempdir()
+#' config_list <- list(
+#' output_directory = output_dir,
+#' qc_filter = "slope_max",
+#' qc_per = "0.4_0.8" 
+#' )
+#' config_path <- tempfile(fileext = ".yml")
+#' yaml::write_yaml(config_list, config_path)
+#' set.seed(123)
+#' gene_ids <- paste0("gene", 1:100)
+#' spatial_names <- paste0("SPATIAL_", 1:100)
+#' count_matrix <- matrix(rpois(100*100, lambda = 20), nrow = 100, ncol = 100)
+#' colnames(count_matrix) <- spatial_names
+#' gene_matrix <- data.frame(row.names = gene_ids, count_matrix, stringsAsFactors = FALSE)
+#' matched_data <- data.frame(
+#'  X_coordinate = runif(100, min = 0, max = 1000),
+#'  Y_coordinate = runif(100, min = 0, max = 1000),
+#'  barcode_sequence = paste0("BC", 1:100),
+#'  spatial_name = spatial_names,
+#'  stringsAsFactors = FALSE
+#' )
+#' umi_counts <- colSums(gene_matrix[, -1])
+#' matched_data$UMI_count <- umi_counts[match(matched_data$spatial_name, names(umi_counts))]
+#' qc_results <- Run_QC(
+#'  config = config_path,
+#'  matched.data = matched_data,
+#'  gene.matrix = gene_matrix,
+#'  show.config = FALSE
+#' )
 #' @importFrom ggplot2 ggplot scale_fill_brewer aes geom_bar geom_text theme_minimal theme labs ggsave element_text geom_point scale_color_gradient element_blank element_rect xlim ylim geom_segment geom_line geom_hline arrow unit
 #' @importFrom dplyr %>%
 #' @importFrom stats quantile na.omit
@@ -91,20 +117,27 @@ Run_QC <- function(config, matched.data, gene.matrix, show.config = TRUE) {
   ed_lower <- max_slope_interval2$Value[which.max(max_slope_interval2$SlopeIncrease)]
 
   # Plotting
-  ggplot(quantile_df, aes(x = Percentile, y = Value)) +
-    geom_line() +
-    geom_point() +
-    geom_segment(data = max_slope_interval, aes(x = Percentile[1], y = Value[1], xend = Percentile[2], yend = Value[2]),
-                 color = "red", linewidth = 1, arrow = arrow(type = "closed", length = unit(0.2, "inches"))) +
-    geom_text(data = max_slope_interval, aes(x = Percentile[2], y = Value[2], label = paste("EmptyDrop Retain Threshold", round(Value[1], 2))),
-              vjust = -1, color = "red") +
-    geom_hline(yintercept = ed_lower, linetype = "dashed", color = "blue") +
-    geom_text(aes(x = max(Percentile), y = ed_lower, label = paste("EmptyDrop Lower Threshold", round(ed_lower, 2))),
-              vjust = -1, hjust = 1.1, color = "blue") +
-    labs(title = "Threshold to filter out low count UMI as potential background noise", x = "UMI Count Percentile", y = "Value") +
-    theme_minimal()
-  ggsave("Threshold.pdf", width = 10, height = 8, units = "in", device = "pdf")
-
+  suppressWarnings({
+    p <- ggplot(quantile_df, aes(x = Percentile, y = Value)) +
+      geom_line() +
+      geom_point() +
+      geom_segment(data = max_slope_interval, 
+                   aes(x = Percentile[1], y = Value[1], xend = Percentile[2], yend = Value[2]),
+                   color = "red", linewidth = 1, arrow = arrow(type = "closed", length = unit(0.2, "inches"))) +
+      geom_text(data = max_slope_interval, 
+                aes(x = Percentile[2], y = Value[2], label = paste("EmptyDrop Retain Threshold", round(Value[1], 2))),
+                vjust = -1, color = "red") +
+      geom_hline(yintercept = ed_lower, linetype = "dashed", color = "blue") +
+      geom_text(aes(x = max(Percentile), y = ed_lower, 
+                    label = paste("EmptyDrop Lower Threshold", round(ed_lower, 2))),
+                vjust = -1, hjust = 1.1, color = "blue") +
+      labs(title = "Threshold to filter out low count UMI as potential background noise", 
+           x = "UMI Count Percentile", y = "Value") +
+      theme_minimal()
+    
+    ggsave("Threshold.pdf", plot = p, width = 10, height = 8, units = "in", device = "pdf")  
+  })
+  
   # Filtering based on QC method
   if (qc_filter == "slope_max") {
     keep_cells <- sum_counts[sum_counts > threshold]
