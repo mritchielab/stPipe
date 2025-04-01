@@ -12,9 +12,20 @@
 #' @param show.config Logical value indicating whether to print the configuration. Defaults to TRUE.
 #' @return A list contains spatial and read level visualization results.
 #' @examples
-#' \dontrun{
-#' Vis.results <- Run_Visualization(matched.data = matching, config = "/path/to/config_stPipe.yml", Vis.spatial = TRUE, Vis.read = TRUE, show.config = TRUE)
-#' }
+#' temp_config <- tempfile(fileext = ".yml")
+#' writeLines("technology_version: 'Visium 1.0'\noutput_directory: '.'", temp_config)
+#' matched.data <- data.frame(
+#' X_coordinate = runif(10, 0, 100),
+#' Y_coordinate = runif(10, 0, 100),
+#' UMI_count = sample(1:100, 10),
+#' spatial_name = paste0("Spot", 1:10),
+#' stringsAsFactors = FALSE
+#' )
+#' vis_results <- Run_Visualization(matched.data = matched.data, 
+#' config = temp_config, 
+#' Vis.spatial = TRUE, 
+#' Vis.read = FALSE, 
+#' show.config = FALSE)
 #' @export
 #' @importFrom ggplot2 ggplot scale_fill_brewer aes geom_bar geom_text theme_minimal theme labs element_text geom_point scale_color_gradient element_blank element_rect xlim ylim
 
