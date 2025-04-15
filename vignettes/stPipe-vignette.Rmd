@@ -134,7 +134,8 @@ output <- capture.output(
   Cluster.results <- Run_Clustering(
     gene.count = st.result$gene_count,
     matched.data = st.result$matched_data,
-    num_clusters = 5
+    num_clusters = 5,
+    n_features = 50
   )
 )
 cat(output[1:15], sep = "\n")
