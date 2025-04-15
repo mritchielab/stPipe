@@ -21,6 +21,7 @@
 #' @param gene.count A data frame containing gene count data with gene IDs as row names.
 #' @param matched.data A data frame containing matched spatial coordinates with raw UMI counts.
 #' @param num_clusters Number of clusters during clustering. Default set to five.
+#' @param n_features Number of features used during clustering. Default set to one thousand.
 #' @return A list which contains interactive clustering visualization result with related data frames.
 #' @examples
 #' set.seed(123)
