@@ -12,7 +12,7 @@ biocViews: ImmunoOncology, Software, Sequencing, RNASeq, GeneExpression, SingleC
         SequenceMatching, Preprocessing, QualityControl, GenomeAnnotation, DataImport, Spatial, Transcriptomics, Clustering
 Description: This package serves as an upstream pipeline for pre-processing sequencing-based spatial transcriptomics data. Functions includes FASTQ trimming, BAM file reformatting, index building, spatial barcode detection, demultiplexing, gene count matrix generation with UMI deduplication, QC, and revelant visualization. Config is an essential input for most of the functions which aims to improve reproducibility.
 Depends:
-    R (>= 4.3.0)
+    R (>= 4.5.0)
 Imports:
     AnnotationDbi,
     curl,
