@@ -207,7 +207,7 @@ Run_ST <- function(config, show.config = TRUE) {
         unique_rows <- remove_duplicates(csv_file)
         file_conn <- file(output_file, "w")
         writeLines("##gff-version 3", file_conn)
-        for (i in 1:nrow(unique_rows)) {
+        for (i in seq_len(nrow(unique_rows))) {
           gene_id <- unique_rows[i, 1]
           gff3_line <- paste(gene_id, ".", "exon", "1", "100000000", ".", "+", ".", paste0("gene_id=", gene_id), sep = "\t")
           writeLines(gff3_line, file_conn)
@@ -221,7 +221,7 @@ Run_ST <- function(config, show.config = TRUE) {
 
       unique_rows <- remove_duplicates(csv_file)
       fasta_content <- ""
-      for (i in 1:nrow(unique_rows)) {
+      for (i in seq_len(nrow(unique_rows))) {
         gene_id <- unique_rows[i, 1]
         probe_seq <- unique_rows[i, 2]
         fasta_content <- paste0(fasta_content, generate_fasta(gene_id, probe_seq), "\n")
