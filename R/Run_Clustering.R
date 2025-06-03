@@ -26,10 +26,10 @@
 #' @examples
 #' set.seed(123)
 #' gene.count <- matrix(sample(0:100, 200 * 100, replace = TRUE), nrow = 200)
-#' rownames(gene.count) <- paste0("Gene", 1:200)
-#' colnames(gene.count) <- paste0("Spot", 1:100)
+#' rownames(gene.count) <- paste0("Gene", seq_len(200))
+#' colnames(gene.count) <- paste0("Spot", seq_len(100))
 #' matched.data <- data.frame(
-#'   spatial_name = paste0("Spot", 1:100),
+#'   spatial_name = paste0("Spot", seq_len(100)),
 #'   x_coord = runif(100, 0, 10),
 #'   y_coord = runif(100, 0, 10)
 #' )
@@ -52,7 +52,7 @@ Run_Clustering <- function(gene.count, matched.data, num_clusters = 5, n_feature
   gene_disp[is.na(gene_disp) | is.infinite(gene_disp)] <- 0
   
   # Select top n_features genes by dispersion
-  selected_genes <- names(sort(gene_disp, decreasing = TRUE))[1:min(n_features, length(gene_disp))]
+  selected_genes <- names(sort(gene_disp, decreasing = TRUE))[seq_len(min(n_features, length(gene_disp)))]
   
   # Subset gene count matrix
   gene.count <- gene.count[selected_genes, ]
