@@ -14,15 +14,15 @@
 #' matched_data <- data.frame(
 #' X_coordinate = runif(10, 0, 100),
 #' Y_coordinate = runif(10, 0, 100),
-#' UMI_count = sample(1:100, 10),
-#' spatial_name = paste0("Spot", 1:10),
+#' UMI_count = sample(seq_len(100), 10),
+#' spatial_name = paste0("Spot", seq_len(10)),
 #' stringsAsFactors = FALSE
 #' )
 #' clustering_result <- data.frame(
 #' TSNE1 = runif(10, -50, 50),
 #' TSNE2 = runif(10, -50, 50),
-#' spot = paste0("Spot", 1:10),
-#' cluster = sample(1:3, 10, replace = TRUE),
+#' spot = paste0("Spot", seq_len(10)),
+#' cluster = sample(seq_len(3), 10, replace = TRUE),
 #' stringsAsFactors = FALSE
 #' )
 #' if (interactive()) {
@@ -77,7 +77,7 @@ Run_Interactive <- function(matched_data, clustering_result, background_img = NU
   if (!is.null(background_img)) {
     maxX <- dim(background_img)[1]
     maxY <- dim(background_img)[2]
-    p1 <- ggplot2::ggplot(mapping = ggplot2::aes(1:maxX, 1:maxY)) +
+    p1 <- ggplot2::ggplot(mapping = ggplot2::aes(seq_len(maxX), seq_len(maxY))) +
       ggplot2::annotation_raster(background_img, xmin = 1, xmax = maxX, ymin = 1, ymax = maxY)
   } else {
     maxX <- max(plot_d$X_coordinate)
