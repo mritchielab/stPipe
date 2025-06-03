@@ -50,15 +50,15 @@
 #' config_path <- tempfile(fileext = ".yml")
 #' yaml::write_yaml(config_list, config_path)
 #' set.seed(123)
-#' gene_ids <- paste0("gene", 1:100)
-#' spatial_names <- paste0("SPATIAL_", 1:100)
+#' gene_ids <- paste0("gene", seq_len(100))
+#' spatial_names <- paste0("SPATIAL_", seq_len(100))
 #' count_matrix <- matrix(rpois(100*100, lambda = 20), nrow = 100, ncol = 100)
 #' colnames(count_matrix) <- spatial_names
 #' gene_matrix <- data.frame(row.names = gene_ids, count_matrix, stringsAsFactors = FALSE)
 #' matched_data <- data.frame(
 #'  X_coordinate = runif(100, min = 0, max = 1000),
 #'  Y_coordinate = runif(100, min = 0, max = 1000),
-#'  barcode_sequence = paste0("BC", 1:100),
+#'  barcode_sequence = paste0("BC", seq_len(100)),
 #'  spatial_name = spatial_names,
 #'  stringsAsFactors = FALSE
 #' )
@@ -105,7 +105,7 @@ Run_QC <- function(config, matched.data, gene.matrix, show.config = TRUE) {
   )
   quantile_df$Slope <- c(NA, diff(quantile_df$Value) / diff(quantile_df$Percentile))
   max_slope_index <- which.max(quantile_df$Slope[-1]) + 1  # first slope is NA
-  max_slope_interval <- quantile_df[max_slope_index - 1:max_slope_index, ]
+  max_slope_interval <- quantile_df[max_slope_index - seq_len(max_slope_index), ]
   max_slope_interval <- max_slope_interval[max_slope_interval$Slope < quantile(na.omit(quantile_df$Slope), qc_per_retain)[[1]], ]
   max_slope_interval <- max_slope_interval[max_slope_interval$Value < quantile(na.omit(quantile_df$Value), qc_per_retain)[[1]], ]
   max_slope_interval2 <- max_slope_interval
