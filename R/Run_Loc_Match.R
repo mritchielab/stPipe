@@ -39,14 +39,18 @@
 #' )
 #' config_file <- tempfile(fileext = ".yml")
 #' yaml::write_yaml(config_list, config_file)
-#' result <- Run_Loc_Match(config = config_file, pixel = FALSE, show.config = FALSE)
+#' result <- Run_Loc_Match(
+#'   config = config_file, 
+#'   pixel = FALSE, 
+#'   show.config = FALSE
+#' )
 #' @export
 
 Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
 
   config <- yaml::read_yaml(config)
   if (show.config) {
-    print(config)
+    message(config)
   }
 
   output_directory <- as.character(config$output_directory)
@@ -66,16 +70,16 @@ Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
   if (grepl("Visium", technology_version)) {
     coordinates <- switch(
       visium_coordination,
-      "V1" = stPipe::visium_v1_coordinates,
-      "V2" = stPipe::visium_v2_coordinates,
-      "V3" = stPipe::visium_v3_coordinates,
-      "V4" = stPipe::visium_v4_coordinates,
-      "V5" = stPipe::visium_v5_coordinates,
+      "V1" = readRDS(system.file("extdata", "visium_v1_coordinates.rds", package = "stPipe")),
+      "V2" = readRDS(system.file("extdata", "visium_v2_coordinates.rds", package = "stPipe")),
+      "V3" = readRDS(system.file("extdata", "visium_v3_coordinates.rds", package = "stPipe")),
+      "V4" = readRDS(system.file("extdata", "visium_v4_coordinates.rds", package = "stPipe")),
+      "V5" = readRDS(system.file("extdata", "visium_v5_coordinates.rds", package = "stPipe")),
       stop("Unsupported technology version")
     )
-    print("Heading Coordinates for Visium:")
-    print(head(coordinates))
-    print("Start mapping coordination...")
+    message("Heading Coordinates for Visium:")
+    message(head(coordinates))
+    message("Start mapping coordination...")
     colnames(coordinates) <- c("barcode_sequence", "X_coordinate", "Y_coordinate")
     annotation_file <- file.path(output_directory, "sample_index.csv")
     annotation <- read.csv(annotation_file, stringsAsFactors = FALSE)
@@ -88,9 +92,9 @@ Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
     matched_data$UMI_count <- as.numeric(sum_counts[match(matched_data$cell_name, names(sum_counts))])
   } else if (technology_version == "Slideseq" || technology_version == "Curio-seeker") {
     coordinates <- read.csv(bead_location, header = TRUE, stringsAsFactors = FALSE)
-    print("Heading Coordinates for Slideseq or Curio-seeker:")
-    print(head(coordinates))
-    print("Start mapping coordination...")
+    message("Heading Coordinates for Slideseq or Curio-seeker:")
+    message(head(coordinates))
+    message("Start mapping coordination...")
     colnames(coordinates) <- c("barcode_sequence", "X_coordinate", "Y_coordinate")
 
     # Read annotation and gene count data
@@ -105,7 +109,7 @@ Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
     matched_data$UMI_count <- as.numeric(sum_counts[match(matched_data$cell_name, names(sum_counts))])
 
   } else if (technology_version == "Stereoseq") {
-    print("Processing Stereoseq technology...")
+    message("Processing Stereoseq technology...")
 
     # Load sample_index
     sample_index_path <- file.path(output_directory, "sample_index.csv")
@@ -185,7 +189,7 @@ Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
 
   # Compute pixel information if pixel = T
   if (pixel) {
-    print("Start computing pixel information...")
+    message("Start computing pixel information...")
 
     # set R_PACKAGE_DIR environment variable
     r_package_dir <- system.file(package = "stPipe")
