@@ -7,7 +7,7 @@ Authors@R: c(person("Yang", "Xu", role=c("aut", "cre"), email="xu.ya@wehi.edu.au
         person("Shian", "Su", role=c("aut"), email="su.s@wehi.edu.au"), 
         person("Luyi", "Tian", role=c("aut"), email="tian.l@wehi.edu.au"), 
         person("Yunshun", "Chen", role=c("ctb"), email="yuchen@wehi.edu.au"), 
-        person("Matthew", "Ritchie", role=c("ctb"), email="mritchie@wehi.edu.au"))
+        person("Matthew", "Ritchie", role=c("ctb", "fnd"), email="mritchie@wehi.edu.au"))
 biocViews: ImmunoOncology, Software, Sequencing, RNASeq, GeneExpression, SingleCell, Visualization,
         SequenceMatching, Preprocessing, QualityControl, GenomeAnnotation, DataImport, Spatial, Transcriptomics, Clustering
 Description: This package serves as an upstream pipeline for pre-processing sequencing-based spatial transcriptomics data. Functions includes FASTQ trimming, BAM file reformatting, index building, spatial barcode detection, demultiplexing, gene count matrix generation with UMI deduplication, QC, and revelant visualization. Config is an essential input for most of the functions which aims to improve reproducibility.
@@ -34,6 +34,9 @@ Imports:
     Rhtslib,
     Rsubread,
     Rtsne,
+    irlba,
+    Seurat,
+    SeuratObject,
     scales,
     scPipe,
     shiny,
@@ -47,13 +50,14 @@ LinkingTo:
     Rcpp, Rhdf5lib, testthat, Rhtslib
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 RoxygenNote: 7.3.2
 URL: https://github.com/mritchielab/stPipe
 BugReports: https://github.com/mritchielab/stPipe/issues/new
 Suggests: 
     knitr,
     plotly,
+    BiocStyle,
     rmarkdown,
     shiny,
     testthat (>= 3.0.0),
