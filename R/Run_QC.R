@@ -79,7 +79,7 @@ Run_QC <- function(config, matched.data, gene.matrix, show.config = TRUE) {
 
   config <- yaml::read_yaml(config)
   if (show.config) {
-    print(config)
+    message(config)
   }
 
   output_directory <- as.character(config$output_directory)
