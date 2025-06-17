@@ -26,11 +26,12 @@
 #' stringsAsFactors = FALSE
 #' )
 #' if (interactive()) {
-#' Run_Interactive(matched_data = matched_data, 
-#'                 clustering_result = clustering_result, 
-#'                                background_img = NULL, 
-#'                                reduction_method = "tsne", 
-#'                                point_size = 1)
+#' Run_Interactive(
+#'   matched_data = matched_data, 
+#'   clustering_result = clustering_result, 
+#'   background_img = NULL, 
+#'   reduction_method = "tsne", 
+#'   point_size = 1)
 #'                                }
 #' @return R-shiny interactive webpage.
 #' @export
