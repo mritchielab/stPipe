@@ -10,7 +10,7 @@
 #' This function processes sequencing-based spatial transcriptomics data using various steps, including BAM to FASTQ conversion, trimming, index building, alignment, and barcode detection.
 #' For Slideseq technology, the input should be BAM file and for all other technologies the input should be FASTQ file.
 #' @examples
-#' data_path <- system.file("data", package = "stPipe")
+#' data_path <- system.file("extdata", package = "stPipe")
 #' output_directory <- file.path(tempdir(), "stPipe_output")
 #' config_list <- list(
 #' data_directory = data_path,          
@@ -31,7 +31,10 @@
 #' )
 #' config_file <- tempfile(fileext = ".yml")
 #' yaml::write_yaml(config_list, config_file)
-#' Run_ST(config = config_file, show.config = FALSE)
+#' Run_ST(
+#'   config = config_file, 
+#'   show.config = FALSE
+#' )
 #' @param config Path to the YAML configuration file.
 #' @param show.config Logical value indicating whether to print the configuration. Defaults to TRUE.
 #' @return None. Outputs are saved to specified directories.
@@ -42,7 +45,7 @@ Run_ST <- function(config, show.config = TRUE) {
 
   config <- yaml::read_yaml(config)
   if (show.config) {
-    print(config)
+    message(config)
   }
 
   data_dirs <- strsplit(as.character(config$data_directory), ",\\s*")[[1]]  # Multiple data directories
@@ -110,18 +113,18 @@ Run_ST <- function(config, show.config = TRUE) {
     if (technology_version == "Slideseq") {
 
       input_bam <- as.character(list.files(data_dir, pattern = ".*\\.bam$", full.names = TRUE))
-      print("Using the following BAM file:")
-      print(input_bam)
+      message("Using the following BAM file:")
+      message(input_bam)
       reticulate::py_run_string(py_reformat)
       combined_fastq <- file.path
 
     } else if (technology_version == "Stereoseq") {
-      print("Using the following FASTQ files:")
+      message("Using the following FASTQ files:")
 
       read_1_fq_path <- list.files(data_dir, pattern = "R1", full.names = TRUE)[1]
       read_2_fq_path <- list.files(data_dir, pattern = "R2", full.names = TRUE)[1]
-      print(read_1_fq_path)
-      print(read_2_fq_path)
+      message(read_1_fq_path)
+      message(read_2_fq_path)
 
       if (is.null(read_1_fq_path) || is.null(read_2_fq_path)) {
         stop("R1 or R2 FASTQ files not found!")
@@ -162,11 +165,11 @@ Run_ST <- function(config, show.config = TRUE) {
 
     } else if (grepl("Visium", technology_version)) {
 
-      print("Using the following FASTQ files:")
+      message("Using the following FASTQ files:")
       fq_R2_files <- list.files(data_dir, pattern = "R1", full.names = TRUE)
-      print(fq_R2_files)
+      message(fq_R2_files)
       fq_R1_files <- list.files(data_dir, pattern = "R2", full.names = TRUE)
-      print(fq_R1_files)
+      message(fq_R1_files)
       if (length(fq_R1_files) != 1 || length(fq_R2_files) != 1) {
         stop("Expected exactly one R1 and one R2 FASTQ file, but found inconsistencies")
       }
@@ -186,11 +189,11 @@ Run_ST <- function(config, show.config = TRUE) {
     if (grepl("probe", technology_version)) {
 
       if (technology_version == "Visium_probe_v1" && species == "human") {
-        csv_file <- stPipe::Visium_Human_Transcriptome_Probe_Set_v1_0_GRCh38_2020_A
+        csv_file <- readRDS(system.file("extdata", "Visium_Human_Transcriptome_Probe_Set_v1_0_GRCh38_2020_A.rds", package = "stPipe"))
       } else if (technology_version == "Visium_probe_v2" && species == "human") {
-        csv_file <- stPipe::Visium_Human_Transcriptome_Probe_Set_v2_0_GRCh38_2020_A
+        csv_file <- readRDS(system.file("extdata", "Visium_Human_Transcriptome_Probe_Set_v2_0_GRCh38_2020_A.rds", package = "stPipe"))
       } else if (technology_version == "Visium_probe_v1" && species == "mouse") {
-        csv_file <- stPipe::Visium_Mouse_Transcriptome_Probe_Set_v1_0_mm10_2020_A
+        csv_file <- readRDS(system.file("extdata", "Visium_Mouse_Transcriptome_Probe_Set_v1_0_mm10_2020_A.rds", package = "stPipe"))
       } else {
         stop("Unsupported combination of technology_version and species for probe-based Visium")
       }
@@ -213,7 +216,7 @@ Run_ST <- function(config, show.config = TRUE) {
           writeLines(gff3_line, file_conn)
         }
         close(file_conn)
-        cat("GFF3 file generated based on the provided probe set:", output_file, "\n")
+        message("GFF3 file generated based on the provided probe set:", output_file, "\n")
       }
 
       fasta_file <- file.path(out_dir, "probe_set.fa")
@@ -228,7 +231,7 @@ Run_ST <- function(config, show.config = TRUE) {
       }
       fasta_content <- sub("\n$", "", fasta_content)
       write(fasta_content, file = fasta_file)
-      cat("FASTA file generated based on the provided probe set:", fasta_file, "\n")
+      message("FASTA file generated based on the provided probe set:", fasta_file, "\n")
 
       generate_gff3(csv_file, gff3_file)
 
