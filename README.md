@@ -4,7 +4,7 @@
 
 The stPipe package provides a comprehensive pipeline for preprocessing sequencing-based spatial transcriptomics data, including 10X Visium, BGI Stereo-seq, Slide-seq, and Curio-seeker.
 
-## The latest development version can be installed with:
+## Installation
 
 ### From Bioconductor
 
