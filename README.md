@@ -6,7 +6,7 @@ The stPipe package provides a comprehensive pipeline for preprocessing sequencin
 
 ## Installation
 
-### From Bioconductor
+### From Bioconductor (recommended approach)
 
 ```
 if (!requireNamespace("BiocManager", quietly=TRUE))
