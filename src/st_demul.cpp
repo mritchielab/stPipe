@@ -24,7 +24,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <unordered_map>
-#include "progressbar.hpp"
+#include "progressbar.h"
 #include <zlib.h>
 #include <htslib/kseq.h>
 #include <htslib/hts.h>
