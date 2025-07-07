@@ -4,7 +4,6 @@
 #' @name RunDemultiplex
 NULL
 
-#' @export
 RunDemultiplex <- function(read_1_fq_path, read_2_fq_path, h5_mapping_path, output_fq_path, n_reads, coord_bc_start, coord_bc_len, umi_start, umi_len, bin_size = 1L) {
     invisible(.Call(`_stPipe_RunDemultiplex`, read_1_fq_path, read_2_fq_path, h5_mapping_path, output_fq_path, n_reads, coord_bc_start, coord_bc_len, umi_start, umi_len, bin_size))
 }
