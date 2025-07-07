@@ -14,37 +14,28 @@ Description: This package serves as an upstream pipeline for pre-processing sequ
 Depends:
     R (>= 4.5.0)
 Imports:
-    AnnotationDbi,
-    curl,
+    basilisk,
     data.table,
     DropletUtils,
     dplyr,
     ggplot2,
     methods,
-    parallel,
-    patchwork,
     pbmcapply,
-    org.Hs.eg.db,
     reticulate,
     rmarkdown,
     Rcpp,
-    RcppArmadillo,
-    rhdf5,
-    Rhdf5lib,
     Rhtslib,
     Rsubread,
     Rtsne,
-    irlba,
     Seurat,
     SeuratObject,
-    scales,
     scPipe,
     shiny,
+    SummarizedExperiment,
     SingleCellExperiment,
     SpatialExperiment,
     stats,
     umap,
-    viridis,
     yaml
 LinkingTo: 
     Rcpp, Rhdf5lib, testthat, Rhtslib
@@ -59,9 +50,6 @@ Suggests:
     knitr,
     plotly,
     BiocStyle,
-    rmarkdown,
-    shiny,
-    testthat (>= 3.0.0),
-    umap
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
