@@ -31,7 +31,6 @@
 #include "Rcpp.h"
 using namespace Rcpp;
 
-using std::cout;
 using std::endl;
 #ifndef H5_NO_NAMESPACE
     using namespace H5;
@@ -87,11 +86,11 @@ double ReadStats::getHitAcc() {
 }
 
 void ReadStats::reportStats() {
-    cout << "Total number of reads: " << total << endl;
-    cout << "Clean hits: " << clean_hit << endl;
-    cout << "Single Error hits: " << err_hit << endl;
-    cout << "Misses: " << miss << endl;
-    cout << "Total hits: " << (clean_hit+err_hit) << endl;
+    Rcpp::Rcout << "Total number of reads: " << total << endl;
+    Rcpp::Rcout << "Clean hits: " << clean_hit << endl;
+    Rcpp::Rcout << "Single Error hits: " << err_hit << endl;
+    Rcpp::Rcout << "Misses: " << miss << endl;
+    Rcpp::Rcout << "Total hits: " << (clean_hit+err_hit) << endl;
 }
 
 void ReadStats::reportStatsR() {
