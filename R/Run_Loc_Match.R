@@ -40,8 +40,8 @@
 #' config_file <- tempfile(fileext = ".yml")
 #' yaml::write_yaml(config_list, config_file)
 #' result <- Run_Loc_Match(
-#'   config = config_file, 
-#'   pixel = FALSE, 
+#'   config = config_file,
+#'   pixel = FALSE,
 #'   show.config = FALSE
 #' )
 #' @export
@@ -78,33 +78,33 @@ Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
       stop("Unsupported technology version")
     )
     message("Heading Coordinates for Visium:")
-    message(head(coordinates))
+    message(utils::head(coordinates))
     message("Start mapping coordination...")
     colnames(coordinates) <- c("barcode_sequence", "X_coordinate", "Y_coordinate")
     annotation_file <- file.path(output_directory, "sample_index.csv")
-    annotation <- read.csv(annotation_file, stringsAsFactors = FALSE)
+    annotation <- utils::read.csv(annotation_file, stringsAsFactors = FALSE)
     matched_data <- merge(annotation, coordinates, by = "barcode_sequence", all.x = TRUE)
-    matched_data <- matched_data[complete.cases(matched_data), ]
+    matched_data <- matched_data[stats::complete.cases(matched_data), ]
 
     gene_count_file <- file.path(output_directory, "gene_count.csv")
-    gene_count <- read.csv(gene_count_file)
+    gene_count <- utils::read.csv(gene_count_file)
     sum_counts <- colSums(gene_count[, -1])
     matched_data$UMI_count <- as.numeric(sum_counts[match(matched_data$cell_name, names(sum_counts))])
   } else if (technology_version == "Slideseq" || technology_version == "Curio-seeker") {
-    coordinates <- read.csv(bead_location, header = TRUE, stringsAsFactors = FALSE)
+    coordinates <- utils::read.csv(bead_location, header = TRUE, stringsAsFactors = FALSE)
     message("Heading Coordinates for Slideseq or Curio-seeker:")
-    message(head(coordinates))
+    message(utils::head(coordinates))
     message("Start mapping coordination...")
     colnames(coordinates) <- c("barcode_sequence", "X_coordinate", "Y_coordinate")
 
     # Read annotation and gene count data
     annotation_file <- file.path(output_directory, "sample_index.csv")
-    annotation <- read.csv(annotation_file, stringsAsFactors = FALSE)
+    annotation <- utils::read.csv(annotation_file, stringsAsFactors = FALSE)
     matched_data <- merge(annotation, coordinates, by = "barcode_sequence", all.x = TRUE)
-    matched_data <- matched_data[complete.cases(matched_data), ]
+    matched_data <- matched_data[stats::complete.cases(matched_data), ]
 
     gene_count_file <- file.path(output_directory, "gene_count.csv")
-    gene_count <- read.csv(gene_count_file)
+    gene_count <- utils::read.csv(gene_count_file)
     sum_counts <- colSums(gene_count[, -1])
     matched_data$UMI_count <- as.numeric(sum_counts[match(matched_data$cell_name, names(sum_counts))])
 
@@ -184,8 +184,8 @@ Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
   }
 
   else {
-  stop("Unknown technology_version in config file, please check again.")
-}
+    stop("Unknown technology_version in config file, please check again.")
+  }
 
   # Compute pixel information if pixel = T
   if (pixel) {
@@ -208,11 +208,11 @@ Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
     )
 
     # Load pixel coordinates
-    pixel_data <- read.csv(pixel_output_csv, stringsAsFactors = FALSE)
+    pixel_data <- utils::read.csv(pixel_output_csv, stringsAsFactors = FALSE)
 
     # Read ref_pos.csv internally
     ref_pos_path <- system.file("extdata", "ref_pos.csv", package = "stPipe")
-    ref_pos <- read.csv(ref_pos_path, header = FALSE, stringsAsFactors = FALSE)
+    ref_pos <- utils::read.csv(ref_pos_path, header = FALSE, stringsAsFactors = FALSE)
     colnames(ref_pos) <- c("barcode_sequence", "in_tissue", "X_coordinate", "Y_coordinate", "x", "y")
     ref_pos <- ref_pos[-1, ]  # Remove the first row
 
@@ -228,7 +228,7 @@ Run_Loc_Match <- function(config, pixel = FALSE, show.config = TRUE) {
   colnames(matched_data)[2] <- c("spatial_name")
   matched_data$spatial_name <- gsub("^CELL_", "SPATIAL_", matched_data$spatial_name)
 
-  gene_count <- read.csv(gene_count_file)
+  gene_count <- utils::read.csv(gene_count_file)
   rownames(gene_count) <- gene_count$gene_id
   gene_count$gene_id <- NULL
   colnames(gene_count) <- gsub("^CELL_", "SPATIAL_", colnames(gene_count))
