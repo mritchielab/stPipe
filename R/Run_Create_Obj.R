@@ -32,6 +32,8 @@
 #' )
 #' @export
 #' @importFrom ggplot2 theme
+#' @importFrom methods new
+#' @importFrom SummarizedExperiment rowData<-
 
 Run_Create_Obj <- function(gene.matrix, matched.data, obj.type, tech, ss.radius = 3000) {
   
