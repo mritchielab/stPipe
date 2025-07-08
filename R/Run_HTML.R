@@ -12,8 +12,8 @@
 #' dummy_gene_count <- data.frame(GeneA = c(10, 20), GeneB = c(5, 15))
 #' rownames(dummy_gene_count) <- c("spot1", "spot2")
 #' write.csv(dummy_gene_count, file = file.path(temp_dir, "gene_count.csv"), row.names = TRUE)
-#' png_files <- c("Mapping_statistics_plot.png", "UMI_duplication_plot.png", 
-#'              "Barcode_demultiplexing_plot.png", "Spatial_Heatmap_of_UMI_Count_raw.png", 
+#' png_files <- c("Mapping_statistics_plot.png", "UMI_duplication_plot.png",
+#'              "Barcode_demultiplexing_plot.png", "Spatial_Heatmap_of_UMI_Count_raw.png",
 #'                          "Spatial_Heatmap_of_UMI_Count_log.png", "Threshold.png")
 #'                          for (f in png_files) {
 #'                            fileConn <- file(file.path(temp_dir, f))
@@ -81,7 +81,7 @@ Run_HTML <- function(path) {
   rmd_template <- readLines(rmd_template_path)
 
   # gene count information
-  gene_count <- read.csv(file.path(path, "gene_count.csv"), row.names = 1)
+  gene_count <- utils::read.csv(file.path(path, "gene_count.csv"), row.names = 1)
   #filtered_gene_count <- read.csv(file.path(path, "upstream_QC/filtered_gene_count.csv"), row.names = 1)
 
   # barplot for QC filtering
