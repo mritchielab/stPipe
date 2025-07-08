@@ -74,6 +74,9 @@
 #' @importFrom dplyr %>%
 #' @importFrom stats quantile na.omit
 
+if (getRversion() >= "2.15.1") {
+  utils::globalVariables("Percentile")
+}
 
 Run_QC <- function(config, matched.data, gene.matrix, show.config = TRUE) {
 
