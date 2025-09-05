@@ -13,6 +13,7 @@
 #' @param ss.radius Optional. Radius for filtering SlideSeq or Curio-seeker spots for Seurat object. Default is 3000.
 #' @param tech Type of spatial transcriptomics sequencing technology, can be "Visium", "Slideseq", "Curio-seeker", or "Stereoseq".
 #' @return Created spatial transcriptomics data object as required by 'obj.type'.
+#' @examples
 #' set.seed(123)
 #' gene.count <- matrix(sample(0:100, 200*100, TRUE), nrow=200)
 #' rownames(gene.count) <- paste0('Gene', 1:200)
