@@ -73,7 +73,7 @@ testthat::test_that("EmptyDropletUtils mode applies emptyDrops filter correctly"
   )
 
   # Mock DropletUtils::emptyDrops to return dummy_outs
-  testthat::with_mock(
+  testthat::with_mocked_bindings(
     `DropletUtils::emptyDrops` = function(mat, retain) {
       # mat is expected as a data.frame of counts
       testthat::expect_s3_class(mat, "data.frame")
